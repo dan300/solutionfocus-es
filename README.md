@@ -1,59 +1,248 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SolutionFocus.es - Bilingual Coaching Website
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modern, bilingual (English/Spanish) CMS-powered website for Solution Focused Coach Orsi Szabo, built with Laravel 12, Filament Admin Panel, and Tailwind CSS 4.
 
-## About Laravel
+## 🌐 Bilingual Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Base Language**: English
+- **Secondary Language**: Spanish
+- **Language Switcher**: Available in header (both desktop and mobile)
+- **Automatic Locale Detection**: Based on URL prefix or session
+- **Fallback**: Defaults to English if no locale is specified
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📄 Pages Structure
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### English Pages (slugs):
+- `/team` - Meet the Team
+- `/training` - About the Training
+- `/certification` - Coach Certification
+- `/team-coaching` - Team Coaching Sessions
+- `/contact` - Contact
 
-## Learning Laravel
+### Spanish Pages (slugs):
+- `/equipo` - Equipo
+- `/formacion` - Formación
+- `/certificacion` - Certificación
+- `/coaching-equipos` - Coaching de Equipos
+- `/contacto` - Contacto
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 🔧 Technical Implementation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Language Routes
+- Default (no prefix): Uses session locale or defaults to English
+- Prefixed routes: `/en/*` and `/es/*` for explicit locale selection
+- Language switcher: `/language/{locale}` sets session and redirects back
 
-## Laravel Sponsors
+### Middleware
+- `SetLocale` middleware handles locale detection and application
+- Checks URL prefix first, then session, defaults to English
+- Registered in web middleware group
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Translation Files
+- `lang/en/messages.php` - English translations
+- `lang/es/messages.php` - Spanish translations
+- All UI text uses `__('messages.key')` helper
+- Database content is stored separately per language
 
-### Premium Partners
+## 🚀 Quick Start
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+# Setup
+composer install
+npm install
+touch database/database.sqlite
+php artisan migrate
+php artisan db:seed
+npm run build
 
-## Contributing
+# Start server
+php artisan serve
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Visit:
+- English (default): http://127.0.0.1:8000
+- Spanish: http://127.0.0.1:8000/language/es
+- Admin: http://127.0.0.1:8000/admin
 
-## Code of Conduct
+## 🔑 Admin Access
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- **URL**: http://127.0.0.1:8000/admin
+- **Email**: admin@solutionfocus.es
+- **Password**: password
 
-## Security Vulnerabilities
+⚠️ **Change password in production!**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 📝 Content Management
 
-## License
+### Managing Bilingual Pages
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. Log into admin panel
+2. Go to Pages
+3. Create separate page entries for each language:
+   - English slugs: `team`, `training`, `certification`, `team-coaching`
+   - Spanish slugs: `equipo`, `formacion`, `certificacion`, `coaching-equipos`
+
+### Adding New Languages
+
+To add additional languages:
+
+1. Create new language file: `lang/{locale}/messages.php`
+2. Add locale to `$supportedLocales` in `SetLocale` middleware
+3. Update language switcher in `header.blade.php`
+4. Create corresponding page content in database
+
+## 🎨 Design Features
+
+- Teal color scheme for consistency
+- Solution-focused, friendly language
+- Responsive design (mobile-first)
+- Clean, modern interface
+- Accessible navigation
+
+## 🌍 Language Switcher
+
+The language switcher appears in:
+- Desktop header (top right)
+- Mobile menu (bottom)
+
+Clicking EN/ES:
+1. Sets session locale
+2. Redirects to same page
+3. Updates all UI text
+4. Persists across page loads
+
+## 📦 Technology Stack
+
+- **Backend**: Laravel 12
+- **Admin Panel**: Filament 3.2
+- **Frontend**: Blade + Tailwind CSS 4 + Alpine.js
+- **Localization**: Laravel's built-in i18n
+- **Database**: SQLite (local) / MySQL (production)
+
+## 🗄️ Database Structure
+
+### Pages Table
+- Separate entries for each language
+- Slug determines language association
+- Example: `team` (EN) and `equipo` (ES)
+
+### Settings Table
+- Language-neutral configuration
+- Shared across all locales
+
+## 🔗 URL Structure
+
+### Without Prefix (uses session)
+- `/` - Homepage
+- `/team` or `/equipo` - Team page
+- `/contact` - Contact page
+
+### With Prefix (explicit locale)
+- `/en/` - English homepage
+- `/en/team` - English team page
+- `/es/` - Spanish homepage
+- `/es/equipo` - Spanish team page
+
+## 📱 Responsive Breakpoints
+
+- **Mobile**: < 640px
+- **Tablet**: 640px - 1024px
+- **Desktop**: > 1024px
+
+## 🔒 Security
+
+- CSRF protection
+- SQL injection prevention
+- XSS protection
+- Password hashing
+- Session security
+
+## 📧 Email Configuration
+
+Contact form supports both languages:
+- Success messages in user's locale
+- Email templates can be localized
+- Configure SMTP in Laravel Cloud
+
+## 🚀 Deployment to Laravel Cloud
+
+1. Connect repository
+2. Set environment variables
+3. Configure MySQL database
+4. Run migrations: `php artisan migrate --force`
+5. Seed database: `php artisan db:seed --force`
+6. Build assets: `npm run build`
+
+### Environment Variables
+
+```env
+APP_LOCALE=en
+APP_FALLBACK_LOCALE=en
+```
+
+## 🎯 Solution-Focused Approach
+
+All content emphasizes:
+- Building futures, not analyzing problems
+- Client resources and strengths
+- Small, concrete steps
+- What works, not what's broken
+- Positive, empowering language
+
+## 📚 Documentation
+
+- **README.md** - This file
+- **DEPLOYMENT.md** - Laravel Cloud deployment
+- **CMS-GUIDE.md** - Content management
+- **PROJECT-SUMMARY.md** - Project overview
+
+## 🔧 Development Commands
+
+```bash
+# Switch language programmatically
+App::setLocale('es');
+
+# Get current locale
+app()->getLocale();
+
+# Translate strings
+__('messages.nav.team')
+
+# Clear cache
+php artisan cache:clear
+php artisan view:clear
+```
+
+## ✨ Features Summary
+
+- ✅ Bilingual (EN/ES) with easy language switching
+- ✅ Solution-focused content
+- ✅ CMS-powered with Filament
+- ✅ Responsive design
+- ✅ SEO optimized
+- ✅ Admin panel
+- ✅ Contact form
+- ✅ Modern UI
+
+## 🆘 Troubleshooting
+
+### Language not switching
+- Clear browser cache
+- Check session cookie
+- Verify middleware is registered
+
+### Translations missing
+- Check language files exist
+- Verify key matches `messages.{key}`
+- Default language (EN) will be used as fallback
+
+### Wrong content showing
+- Verify page slug matches locale
+- Check database has both EN and ES pages
+- Ensure published status is true
+
+---
+
+**Built with ❤️ for Solution-Focused Coaching**
+
+Ready to deploy bilingual! 🌍🚀
